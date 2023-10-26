@@ -1,0 +1,587 @@
+// oO oO oO oO oO oO oO oO oO oO oO oO
+//------------------------------------
+// v1.4 |   MIXINS.SCSS   | jalis 2k16
+//------------------------------------
+// based on ejalis tpl v3.2.2
+// ready for EJ 6.A - 20160803
+//------------------------------------
+// oO oO oO oO oO oO oO oO oO oO oO oO
+
+
+
+
+/*
+* BASE
+*/
+
+
+// Plug Bouton //
+
+@mixin classic($fondHover:$bt-fond-hover, $txtHover:$bt-text-hover){
+	&:hover, .ann:hover &{ 
+		color: $txtHover;
+		background: $fondHover; 
+	}
+}
+
+@mixin ghost($border-color:initial, $border-width:initial, $border-style:initial, $border-hover:$bt-border, $border:$bt-border){
+	
+	border-color:$border-color;
+	border-width:$border-width;
+	border-style:$border-style;
+	border:$border;
+	padding: calc(bt-padding-y - $border-width); 
+	color: col(ton); 
+	background: transparent; 
+
+	&.light{
+		border-color: col(blanc);
+		color: col(blanc); 
+	}
+	&:hover, .ann:hover &{
+		border:$border-hover;
+		color: $bt-text-hover; 
+		@include trans;  
+	}
+}
+
+@mixin swoosh($fondHover:$bt-fond-hover, $txtHover:$bt-text-hover){
+	z-index: 4;
+	&:before{
+		content: '';
+		background: $fondHover;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		width: 0%;
+		z-index: -4;
+		@include trans; 
+	}
+
+	&:hover, .ann:hover &{
+		color: $bt-text-hover;
+		&:before{
+			width: 100%;
+			left: 0; 
+			@include trans; 
+		}	 
+	}
+}
+
+// configuration simple bouton
+@mixin base-bt($bgCol){
+	background-color:$bgCol;
+	//border:1px solid tint($bgCol, 10%);
+	&:hover{
+		//border-color:$bgCol;
+		background-color:darken($bgCol,6%);
+	}
+	&:active{
+		//border-color:tint($bgCol,20%);
+		background-color:rgba($bgCol,0.5);
+	}
+	
+}
+
+
+
+
+// fond de base pour blocs
+@mixin base-bg($col:#ffffff, $alpha:1, $padding:0px, $autocolor:true){
+	@if $alpha < 1{
+		@include rgba($col, $alpha);
+	}@else{
+		background-color:$col;
+	}
+	@if $padding != 0px{
+		padding:$padding;
+	}
+	@if $autocolor{
+		color:color-check($col,85%);
+		h2, h2>a, h3, h4, a{
+			color:color-check($col,100%);
+		}
+	}
+}
+
+
+
+@mixin base-center-h{
+	top:50%;
+	transform:translateY(-50%);
+
+	body.ie8 &{
+		top:$gap;
+	}
+}
+@mixin base-center-y{@include base-center-h;}
+
+
+@mixin base-center-w{
+	left:50%;
+	transform:translateX(-50%);
+
+	body.ie8 &{
+		left:0;
+	}
+}
+
+@mixin base-center-x{@include base-center-w;}
+
+
+@mixin base-center-both{
+	left:50%; top:50%;
+	transform:translateX(-50%) translateY(-50%);
+
+	body.ie8 &{
+		left:0;
+		top:0;
+	}
+}
+
+@mixin break-center{
+	left:0; top:0;
+	@include transform(none);
+}
+
+
+
+
+
+//display box par defaut
+@mixin display($position:relative, $display:block, $z-index:false, $text-align:false, $overflow:false, $float:false){
+	@if $position != false {position:$position;}
+	@if $display != false {display:$display;}
+	@if $z-index != false {z-index:$z-index;}
+	@if $text-align != false {text-align:$text-align;}
+	@if $overflow != false {overflow:$overflow;}
+	@if $float != false {float:$float;}
+}
+
+
+// configurer pour l'absolute
+@mixin absolute($display:block, $position:absolute, $z-index:false, $text-align:false, $overflow:false, $width:100%, $height:100%, $top:0, $left:0, $bottom:false, $right:false){
+
+	@include display($position:$position, $display:$display, $z-index:$z-index, $text-align:$text-align);
+
+	@if $width!=false{width:$width;}
+	@if $height!=false{	height:$height;}
+	@if $top!=false{top:$top;}
+	@if $left!=false{left:$left;}
+	@if $bottom!=false{bottom:$bottom;}
+	@if $right!=false{right:$right;}
+}
+
+@mixin layout($display:block, $position:absolute, $overflow: initial){
+	position: $position;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: $display;
+	overflow: $overflow;
+}
+
+
+// createur de colonnes
+@mixin col($float:left, $width:auto, $margin:0, $fallbackwidth:auto, $column-gap:$gap/2, $bxs:true){
+	@include display;
+	float:$float;
+	width:$fallbackwidth;
+	width: calc(#{$width} - #{$column-gap});
+	margin:$margin;
+	@if $bxs == true {@include bxs;}
+}
+
+
+// calcul de largeur
+@mixin widther($width:auto, $g:$gap, $fallback:$gap-ie-fallback){
+	@if $width != auto{
+		width: $width - $fallback;
+		width: calc(#{$width} - #{$g});
+	}
+}
+
+// raccourci pour le box-sizing
+@mixin bxs($box-sizing:border-box){
+	box-sizing:border-box;
+}
+
+
+
+// mixin de selection
+@mixin selection{
+	background:col(ton);
+	color:col(blanc);
+	text-shadow:none !important;
+}
+
+
+// css de base pour un accordon jgo
+@mixin accordeon($property:all, $duration:250ms, $delay:0ms, $easing:ease-in-out){
+	@include display($overflow:hidden);
+	height:0px;
+	@include trans($property, $duration, $delay, $easing);
+}
+
+
+
+//mixin pour mise en forme de texte
+@mixin text($font-family:false, $text-align:false, $word-wrap:false, $font-size:false, $color:false, $line-height:false, $text-shadow:false, $font-weight:false, $display:false, $text-decoration:false, $font-style:false, $text-transform:false){
+	@if $font-family != false and $font-family != $typo {font-family: $font-family;}
+	@if $text-align != false {text-align: $text-align;}
+	@if $word-wrap != false {word-wrap: $word-wrap;}
+	@if $font-size != false {font-size: $font-size;}
+	@if $color != false {color: $color;}
+	@if $line-height != false {line-height: $line-height;}
+	@if $text-shadow != false {@include text-shadow($text-shadow);}
+	@if $font-weight != false {font-weight: $font-weight;}
+	@if $display != false {display: $display;}
+	@if $text-decoration != false {text-decoration: $text-decoration;}
+	@if $font-style != false {font-style: $font-style;}
+	@if $text-transform != false {text-transform: $text-transform;}
+
+	@content;
+}
+
+
+
+
+/* Détermine la couleur à utiliser selon la couleur de fond / contenu */
+@function getCouleurSelonFond($seuil:100%,$colcnt:col(cnt), $colfond:col(fond)){
+	@if $colcnt == transparent{
+		@return color-check($colfond, $seuil);
+	}@else{
+		@return color-check($colcnt, $seuil);
+	}
+}
+
+
+/// Convert to string
+/// @param {*} $value - value to cast
+/// @return {String}
+@function _sc-to-string($value) {
+  /*@if type-of($value) == "color" {
+    @warn "Beware! Sass does some color conversion. The resulting string may be different from the color input.";
+  }*/
+
+  @return if(type-of($value) != string, inspect($value), $value);
+}
+
+// retrait du # d'une couleur hexa
+@function url-color($c){
+	$col : str-slice(_sc-to-string($c),2) ;
+	@if $col == 'hite'{$col : FFFFFF;}
+	@if $col == 'lack'{$col : 000000;}
+	@return _sc-to-string($col);
+}
+
+
+
+
+
+/*
+* TRANSITIONS ET ANIMATIONS
+*/
+
+// mixin pour transitions
+@mixin trans($property:all, $duration:280ms, $delay:0ms, $easing:ease-in-out, $short:true){
+	@if $short == true{
+		transition: $property $duration $delay $easing;
+	}@else{
+		transition-property:$property;
+		transition-duration:$duration;
+		transition-delay:$delay;
+		transition-timing-function:$easing;
+	}
+}
+
+
+// creation de keyframes
+@mixin keyframes($name) {
+
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+
+	@-ms-keyframes #{$name} {
+		@content;
+	}
+
+	@keyframes #{$name} {
+		@content;
+	}
+}
+
+
+
+
+// activer une animation en keyframes
+@mixin anim($name, $duration:1000ms, $iteration:1, $easing:$easeOut, $fill-mode:none, $delay:0ms){
+	animation-name:$name;
+	animation-duration:$duration;
+	animation-iteration-count:$iteration;
+	animation-timing-function:$easing;
+	animation-fill-mode:$fill-mode;
+	animation-delay:$delay;
+}
+
+
+
+
+/*
+* RESPONSIVE
+* ------------------
+* ex. @include respond-to(large) OU @include respond-to(640px)
+* respond-from permet de constuire en mobile first
+*/
+
+
+
+
+
+
+
+
+// REVOIR CETTE PARTIE LAAAAAAAA
+
+
+//$resp-large : 1280px;
+$resp-normal : 1000px;
+$resp-tablette: 800px;
+$resp-android: 500px;
+$resp-iphone : 320px;
+
+@mixin respond-to($taille, $taille-min:0px){
+	@if $taille == large{@media only screen and (max-width:$resp-large) and (min-width:$taille-min){@content;}}
+	@if $taille == ipad{@media only screen and (max-width:$resp-ipad) and (min-width:$taille-min){@content;}}
+	@if $taille == normal{@media only screen and (max-width:$resp-normal) and (min-width:$taille-min){@content;}}
+	@if $taille == tablette{@media only screen and (max-width:$resp-tablette) and (min-width:$taille-min){@content;}}
+	@if $taille == android{@media only screen and (max-width:$resp-android) and (min-width:$taille-min){@content;}}
+	@if $taille == iphone{@media only screen and (max-width:$resp-iphone) and (min-width:$taille-min){@content;}}
+
+	@if ($taille != large ) and ($taille != ipad) and ($taille != normal) and ($taille != tablette) and ($taille != android) and ($taille != iphone){
+		@media only screen and (max-width:$taille) and (min-width:$taille-min){@content;}
+	}
+}
+
+
+@mixin respond-from($taille, $taille-max:false){
+	@if $taille-max == false {
+		@if $taille == large{@media only screen and (min-width:$resp-large){@content;}}
+		@if $taille == ipad{@media only screen and (min-width:$rep-ipad){@content;}}
+		@if $taille == normal{@media only screen and (min-width:$resp-normal){@content;}}
+		@if $taille == tablette{@media only screen and (min-width:$resp-tablette){@content;}}
+		@if $taille == android{@media only screen and (min-width:$resp-android){@content;}}
+		@if $taille == iphone{@media only screen and (min-width:$resp-iphone){@content;}}
+
+		@if ($taille != large ) and ($taille != ipad) and ($taille != normal) and ($taille != tablette) and ($taille != android) and ($taille != iphone){
+			@media only screen and (min-width:$taille){@content;}
+		}
+	}@else{
+		
+		$tMax : $taille-max;
+		@if $tMax == large { $tMax:$resp-large; }
+		@if $tMax == ipad { $tMax:$resp-ipad; }
+		@if $tMax == normal { $tMax:$resp-normal; }
+		@if $tMax == tablette { $tMax:$resp-tablette; }
+		@if $tMax == android { $tMax:$resp-android; }
+		@if $tMax == iphone { $tMax:$resp-iphone; }
+		
+		@if $taille == large{@media only screen and (min-width:$resp-large) and (max-width:$tMax){@content;}}
+		@if $taille == ipad{@media only screen and (min-width:$rep-ipad) and (max-width:$tMax){@content;}}
+		@if $taille == normal{@media only screen and (min-width:$resp-normal) and (max-width:$tMax){@content;}}
+		@if $taille == tablette{@media only screen and (min-width:$resp-tablette) and (max-width:$tMax){@content;}}
+		@if $taille == android{@media only screen and (min-width:$resp-android) and (max-width:$tMax){@content;}}
+		@if $taille == iphone{@media only screen and (min-width:$resp-iphone) and (max-width:$tMax){@content;}}
+
+		@if ($taille != large ) and ($taille != ipad) and ($taille != normal) and ($taille != tablette) and ($taille != android) and ($taille != iphone){
+			@media only screen and (min-width:$taille) and (max-width:$tMax){@content;}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@mixin break-float{
+	clear:both;
+	width:auto;
+	float:none !important;
+	margin: 0 0 $gap 0;
+}
+
+@mixin break-flex{
+	display:block !important; 
+	clear:both;
+	width:100%;
+}
+
+
+
+/*====== RECHERCHES =======*/
+
+
+
+/* AJOUTS EJ5 */
+@mixin display-flex($important:false){
+	@if $important == true {
+		display:block !important;
+		display:flex !important;
+		display:-webkit-flex !important;
+		display:-moz-flex !important;
+	}@else{
+		display:block;
+		display:flex;
+		display:-webkit-flex;
+		display:-moz-flex;
+	}
+}
+
+@mixin flexok($inside:true){
+	@if $inside == true {
+		html.jgo-cssvhunit body:not(.badios) &{
+			@content;
+		}
+	}@else{
+		html.jgo-cssvhunit body:not(.badios){
+			@content;
+		}
+	}
+}
+
+@mixin flexnok($inside:true){
+	@if $inside == true {
+		html.jgo-no-cssvhunit &, body.badios &{
+			@content;
+		}
+	}@else{
+		html.jgo-no-cssvhunit &, body.badios{
+			@content;
+		}
+	}
+}
+
+
+
+/* CRATION DE FLECHES / TRIANGLES */
+
+//mixin pour créer une flèche en bordures
+@mixin arrow-border($taille:10px,$border-width:1px, $col:col(ton), $angle:0deg){
+	@include display($position:absolute);
+	width:$taille; height:$taille;
+	content:' ';
+	border-right:$border-width solid $col;
+	border-top:$border-width solid $col;
+	transform:rotate($angle);
+	@content;
+}
+
+// mixin pour créer un triangle / fleche comme c'est qu'on veut
+@mixin arrow-filled($col:col(blanc), $width:10px, $height:10px){
+	position:relative; display:block;
+	content:' ';
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: $height $width/2 0 $width/2;
+	border-color: $col transparent transparent transparent;
+	&.haut{
+		border-color: transparent transparent $col transparent;
+		border-width: 0 $width/2 $height $width/2;
+	}
+}
+
+
+
+
+
+
+/* ZOOM DU DIAPORAMMA */
+@mixin zoomDiapo ($scale:1.2, $duree:2s, $ease:ease) {
+	.slick-slide{
+		transform: scale($scale);
+		transition: opacity $ease $duree, transform $ease $duree !important;
+		opacity: 0 !important;
+		z-index: 1;
+		&.slick-active, &.slick-current{
+			opacity: 1 !important;
+			.loaded &{
+				transform: scale(1.01);
+			}
+			z-index: 10;
+		}
+	}
+}
+
+/* SYSTEME DE RATIOS POUR LA HAUTEUR */
+/* systeme de ratio hauteur css */
+@function getRatio($ratio-list){
+    $value1: nth($ratio-list, 1);
+    $value2: nth($ratio-list, 2);
+	@return ($value2 / $value1) * 100%;
+}
+
+//ratio
+@mixin ratio($ratio-list: (3, 2), $auto: false) {
+  	$width: nth($ratio-list, 1);
+    $height: nth($ratio-list, 2);
+    
+	
+    @if $auto {
+        aspect-ratio: auto #{$width} / #{$height};
+    } @else {
+        aspect-ratio: #{$width} / #{$height};
+    }
+
+
+	@supports not (aspect-ratio: #{$width} / #{$height}) { 
+		&:before{
+			@include display;
+			padding-top: getRatio($ratio-list);
+			content: '';
+		}
+	  } 
+}
+
+
+//calcul de la largeur d'une annonce en fonction d'un margin et d'un nombre d'annonces par ligne
+@mixin autoWidther($nombre_par_ligne,$gap:$gap){
+	@include widther(percentage(1/$nombre_par_ligne), ceil((($gap) - (ceil($gap/$nombre_par_ligne)-1))));
+}
+
+
+@mixin respator {
+	@content;
+	@each $key,$value in $resp {
+		@if map-get($value, helper) == 's'{
+			&-#{$key} {
+				@include respond-from(map-get($value, taille)) {
+					@content;
+				}
+			}
+		}
+	}
+	@each $key,$value in $resp {
+		@if map-get($value, helper) == 'l'{
+			&-#{$key} {
+				@include respond-from(map-get($value, taille)) {
+					@content;
+				}
+			}
+		}
+	}
+}

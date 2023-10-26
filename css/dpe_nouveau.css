@@ -1,0 +1,282 @@
+:root {
+    --levelA: #009c6d;
+    --levelB: #50b054;
+    --levelC: #78bd75;
+    --levelD: #f4e713;
+    --levelE: #f0b40d;
+    --levelF: #eb8335;
+    --levelG: #d7231f;
+
+    --emA: #a3daf8;
+    --emB: #8bb4d2;
+    --emC: #7792b1;
+    --emD: #5f6e8e;
+    --emE: #4d5170;
+    --emF: #3a3551;
+    --emG: #271b35;
+}
+/* Élements diverse */
+.row {
+    display: flex;
+    align-items: stretch;
+}
+
+.space {
+    flex: 3 1 0%;
+    max-width: 160px;
+}
+
+.content-dpe {
+    display: flex;
+    align-items: start;
+}
+
+.fg5 {
+    flex: 5 1 0%;
+}
+
+.fg1 {
+    flex: 1 1 0%;
+}
+
+/* Consomation */
+#consommation {
+    flex: 7 1 0%;
+}
+
+/* Consomation stickers */
+#consommation .etiquette {
+    margin-bottom: 3px;
+}
+
+#consommation .etiquette .stickers {
+    padding: 1px 8px 2px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 32px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+#consommation .etiquette .stickers:after {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    content: "";
+    z-index: -1;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+}
+
+#consommation .etiquette.active .stickers:after {
+    clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 50%, calc(100% - 40px) 100%, 0 100%);
+}
+
+/* Consomation stickers déclinaison */
+#consommation .etiquette.active .letters {
+    font-size: 50px;
+    text-transform: uppercase;
+    display: inline-block;
+    line-height: 50px;
+    z-index: 10;
+    -webkit-text-stroke: 2px #000000;
+}
+
+/* Consomation titres */
+#consommation .bottom-titre {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--levelG);
+    margin-top: 5px;
+    flex: 5 1 0%;
+}
+
+#consommation .top-titre {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--levelA);
+    margin-bottom: 5px;
+    flex: 5 1 0%;
+}
+
+/* Consomation Curseur */
+.curseur {
+    flex: 3 1 0%;
+    max-width: 160px;
+}
+
+#consommation .curseur {
+    display: flex;
+    border: 2px #000 solid;
+    border-radius: 5px 0 0 5px;
+    padding: 5px 0;
+    align-items: center;
+    justify-content: center;
+}
+
+#consommation .curseur > div {
+    padding: 0 5px;
+}
+
+#consommation .curseur > div span {
+    display: block;
+}
+
+#consommation .curseur > div span:nth-child(1) {
+    font-size: 22px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: bold;
+    color: #000000;
+}
+
+#consommation .curseur > div span:nth-child(2) {
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: normal;
+    color: #000000;
+}
+
+#consommation .curseur .separation {
+    height: 100%;
+    width: 2px;
+    max-width: 2px;
+    min-width: 2px;
+    padding: 0px;
+    background: #000000;
+}
+
+/* Emission */
+#emission {
+    border: 3px solid var(--emA);
+    border-radius: 8px;
+    padding: 15px;
+    flex: 4 1 0%;
+    display: inline-block;
+}
+
+/* Emission stcikers */
+#emission .etiquette .stickers {
+    padding: 2px 8px;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 18px;
+    margin-bottom: 2px;
+    border-radius: 0 50px 50px 0;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+#emission .etiquette.active .stickers {
+    padding: 2px 6px;
+    border: 2px solid #000;
+}
+
+#emission .etiquette.active .stickers .letters {
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 35px;
+    -webkit-text-stroke: 2px #000000;
+}
+
+/* Emission stcikers déclinaison */
+
+#emission .top-titre {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+#emission .bottom-titre {
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: bold;
+    color: var(--emG);
+}
+
+#emission .sub-titre {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--emC);
+}
+
+/* Emission Curseur */
+#emission .curseur {
+    line-height: normal;
+    position: absolute !important;
+    top: 50%;
+    right: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    transform: translate(100%, -50%);
+}
+
+#emission .curseur:before {
+    width: 35px;
+    height: 3px;
+    background: #000;
+    content: "";
+    display: block;
+    margin: 0 6px;
+}
+
+#emission .curseur span:nth-child(1) {
+    font-size: 24px;
+    line-height: normal;
+    color: #000;
+    white-space: nowrap;
+}
+
+#emission .curseur span:nth-child(2) {
+    font-size: 11px;
+    line-height: normal;
+    color: #000;
+    margin-left: 7px;
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 800px) {
+    
+    .content-dpe {
+        display: block;
+        align-items: start;
+    }
+    
+    #consommation{
+        margin-bottom: 20px;
+    }
+    
+    #consommation .curseur{
+        border-radius: 5px;
+    }
+    
+    #consommation .curseur > div {
+        padding: 3px 3px;
+    }
+
+    #consommation .curseur > div span:nth-child(1) {
+        font-size: 15px;
+        line-height: 18px;
+    }
+    
+    .space {
+        display: none;
+    }
+
+    .curseur {
+        max-width: 140px;
+    }
+    
+    .etiquette.row{
+        flex-direction: row-reverse;
+    }
+    
+}

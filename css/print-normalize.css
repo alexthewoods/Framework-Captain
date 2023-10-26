@@ -1,0 +1,25 @@
+header, footer, h1, .fil-ariane, .plan--arriere, .menufx
+{
+	display:none !important;
+}
+
+.plan--premier {
+	padding-top: 0 !important;
+}
+
+
+@page {
+  size: landscape;
+}
+
+
+.bloc {
+	margin-bottom: 10px !important;
+}
+
+
+#logo {
+	margin: 30px auto;
+}
+
+

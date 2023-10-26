@@ -1,0 +1,119 @@
+@if $touch-enable == true{
+
+/*!======= JALIS TOUCH CSS =======*/
+	/* elements propres a touch */
+	
+	
+
+	.entete1 { font-size: 30px; }
+	.entete2 { font-size: 26px; }
+	.entete3 { font-size: 22px; }
+	.entete4 { font-size: 18px; }
+	.entete5 { font-size: 16px; }
+	.entete6 { font-size: 14px; }
+
+
+	#preloadImages{
+		display:none;
+	}
+	
+	
+	
+	#ulAdminToolbar{
+		@include display($position:fixed, $z-index:20);
+		top:48px + $gap; left:0;
+		border-right:8px solid col(compl);
+		background:col(noir);
+		background:rgba(col(noir),0.8);
+		padding:$gap/3;
+		width: 150px;
+		@include bxs;
+		
+		transform: translateX(-142px);
+		@include trans;
+		
+		>a#adminAnchor{
+			@include display($position:absolute);
+			cursor: pointer;
+			left:108%;
+			top:50%;
+			transform: translateX(-50%);
+			padding: 35px 5px 5px 5px;
+			min-width:61px;
+			background: url(http://www.jalis.fr/jalis/logo-jalistouch-2.0.png) no-repeat center 5px;
+			
+			color:col(blanc);
+			font-weight:bold;
+			font-size:13px;
+			text-align:left;
+			text-shadow: 0px 1px 0 rgba(0,0,0,0.5);
+			
+			@include bxs;
+		}
+		
+		>ul{
+			>li{
+				@include display;
+				border-bottom: 1px dotted rgba(255,255,255,0.2);
+				padding: 5px;
+				text-align:right;
+				
+				>a{
+					color:col(blanc);
+				}
+				
+				&:hover{
+					background:rgba(0,0,0,0.5);
+				}
+				
+				>ul{
+					>li{
+						font-size:13px;
+						padding: 2px 5px;
+						text-align:right;
+						>a{
+							color:#a0a0a0;
+							&:hover{
+								color:#ffffff;
+							}
+						}
+					}
+				}
+				
+			}
+		}
+		
+		
+		&:hover, &:active{
+			transform: translateX(0);
+			@include trans;
+		}
+		
+		@include respond-to(normal){
+			display:none;
+		}
+		
+	}
+	
+	
+	/*********
+	 * Fiche *
+	 *********/
+	
+	.alertArchive{
+		@include display;
+		padding:$gap;
+		background:tint(col(valid),90%);
+		color:col(valid);
+		border:1px solid tint(col(valid), 60%);
+	}
+	
+	
+	/********************
+	 * Mentions légales *
+	 ********************/
+	
+	#mentions_legales p {
+	    margin : 0 0 $gap 0;
+	}
+}

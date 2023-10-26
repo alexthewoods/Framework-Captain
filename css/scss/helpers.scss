@@ -1,0 +1,1452 @@
+@charset "UTF-8";
+/*! JTTPLv5.0 CAPTAIN | HELPERS.SCSS:CSS  | (c)jalis 2016 all rights reserved */
+@import "includes/_mixins";
+@import "includes/_config";
+/***** HELPERS *****/
+
+/* MIXIN SPECIAL POUR LES TAILLES
+génère les classes qui commencent par small- ; normal- etc...
+*/
+@mixin helperMaker($name, $t, $respKey) {
+
+
+
+	.#{$name} {
+		&-margin#{$respKey} { 
+			margin: $t ;
+		}
+		&-margin{
+			&-top#{$respKey} {
+				margin-top: $t ;
+			}
+			&-top {
+				&-children#{$respKey}{
+					> * ~ * {
+						margin-top: $t ;
+					}
+				}
+			}
+			&-bottom#{$respKey} {
+				margin-bottom: $t ;
+			}
+			&-bottom {
+				&-children#{$respKey}{
+					> * {
+						margin-bottom: $t ;
+						//&:last-of-type{margin-bottom: 0 ;}
+					}
+				}
+			}
+
+			
+			&-left#{$respKey} {
+				margin-left: $t ;
+			}
+			&-left {
+				&-children#{$respKey}{
+					> * ~ * {
+						margin-left: $t ;
+					}
+				}
+			}
+			&-right#{$respKey} {
+				margin-right: $t ;
+			}
+			&-right {
+				&-children#{$respKey}{
+					> * {
+						margin-right: $t ;
+						&:last-of-type{margin-right: 0 ;}
+					}
+				}
+			}
+			&-x#{$respKey} {
+				margin-left: $t ;
+				margin-right: $t ;
+			}
+			&-y#{$respKey} {
+				margin-top: $t ;
+				margin-bottom: $t ;
+			}
+		}
+		&-padding#{$respKey} {
+			padding: $t ;
+		}
+		&-padding {
+			&-top#{$respKey} {
+				padding-top: $t ;
+			}
+			&-bottom#{$respKey} {
+				padding-bottom: $t ;
+			}
+			&-left#{$respKey} {
+				padding-left: $t ;
+			}
+			&-right#{$respKey} {
+				padding-right: $t ;
+			}
+			&-x#{$respKey} {
+				padding-left: $t ;
+				padding-right: $t ;
+			}
+			&-y#{$respKey} {
+				padding-top: $t ;
+				padding-bottom: $t ;
+			}
+
+
+		}
+
+		&-gap#{$respKey} {
+			gap: $t ;
+		} 
+
+		&-gap {
+			&-top#{$respKey} {
+				gap-top: $t ;
+			}
+			&-bottom#{$respKey} {
+				gap-bottom: $t ;
+			}
+			&-left#{$respKey} {
+				gap-left: $t ;
+			}
+			&-right#{$respKey} {
+				gap-right: $t ;
+			}
+			&-x#{$respKey} {
+				gap-left: $t ;
+				gap-right: $t ;
+			}
+			&-y#{$respKey} {
+				gap-top: $t ;
+				gap-bottom: $t ;
+			}
+		}
+
+		@content;
+	}
+}
+
+
+/* CSS DE BASE DES HELPERS
+les helpers sont generes a partir de ce mixin.
+rajouter ses elements ici au besoin
+la variable $respKey correspond au suffixe -s ; -xs ; -l etc...
+-> ne pas l'oublier
+*/
+@mixin helpers($respKey){	
+	
+	//génère les onepixel-margin ... voir helperMaker
+	@each $nom, $taille in $marges {
+		@include helperMaker($nom, $taille, $respKey);
+	}
+	
+	//spécial pour le no-
+	@include helperMaker(no, 0, $respKey) {
+		&-border#{$respKey} {
+			border: none ;
+		}
+		&-background#{$respKey} {
+			background: none ;
+		}
+		&-box-shadow#{$respKey} {
+			box-shadow: none ;
+		}
+		&-uppercase#{$respKey} {
+			text-transform: inherit ;
+		}
+		&-ratio#{$respKey}{
+			&:before{
+				padding-top: 0 ;
+			}
+		}
+	}
+	
+	.margin-auto#{$respKey}{
+		margin-left:auto ;
+		margin-right:auto ;
+		&-left#{$respKey}{
+			margin-left : auto ;
+		}
+		&-right#{$respKey}{
+			margin-right : auto ;
+		}
+	}
+
+
+
+	.font {
+		&-weight {
+			&-thin {
+				font-weight: 100 ;
+			}
+			&-light {
+				font-weight: 300 ;
+			}
+			&-normal {
+				font-weight: 400 ;
+			}
+			&-medium {
+				font-weight: 600 ;
+			}
+			&-bold {
+				font-weight: 700 ;
+			}
+		}
+		&-style {
+			&-italic {
+				font-style: italic ;
+			}
+			&-normal {
+				font-style: normal ;
+			}
+		}
+
+
+
+		&-size {
+
+			&-small {
+				font-size: $smallFontSize;
+			}
+			&-normal {
+				font-size: $normalFontSize;
+			}
+			&-medium {
+				font-size: $mediumFontSize;
+			}
+			&-big {
+				font-size: $bigFontSize;
+				@include respond-to(tablette){
+					font-size: $mediumFontSize*1.2;
+				}
+			}
+			&-title {
+				font-size: $titleFontSize;
+				@include respond-to(tablette){
+					font-size: $bigFontSize;
+				}
+			}
+		}
+
+	}
+
+
+
+	.text {
+
+
+		&-align {
+			&-left#{$respKey} {
+				text-align: left ;
+			}
+			&-right#{$respKey} {
+				text-align: right ;
+			}
+			&-center#{$respKey} {
+				text-align: center ;
+			}
+			&-justify#{$respKey} {
+				text-align: justify ;
+				text-align-last: left ;
+			}
+		}
+
+
+	}
+
+
+	
+
+	.width{
+		&-auto#{$respKey}{width:auto ;}
+		&-100#{$respKey}{width:100% ;}
+		&-80#{$respKey}{
+			width:80% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 80% - #{$taille} ) ;
+				}
+			}
+		}
+		
+
+		&-75#{$respKey}{
+			width:75% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 75% - #{$taille} ) ;
+				}
+			}
+		}
+		&-66#{$respKey}{
+			width:66.666667% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 66.666667% - #{$taille} ) ;
+				}
+			}
+		}
+		&-60#{$respKey}{
+			width:60% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 60% - #{$taille} ) ;
+				}
+			}
+		}
+		&-50#{$respKey}{
+			width:50% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 50% - #{$taille} ) ;
+				}
+			}
+		}
+		&-40#{$respKey}{
+			width:40% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 40% - #{$taille} ) ;
+				}
+			}
+		}
+		&-33#{$respKey}{
+			width:33.333333% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 33.333333% - #{$taille} ) ;
+				}
+			}
+		}
+		&-25#{$respKey}{
+			width:25% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 25% - #{$taille} ) ;
+				}
+			}
+		}
+		&-20#{$respKey}{
+			width:20% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 20% - #{$taille} ) ;
+				}
+			}
+		}
+		&-10#{$respKey}{
+			width:10% ;
+			@each $nom, $taille in $marges{
+				*[class*="#{$nom}-margin"] > &{
+					width : calc( 10% - #{$taille} ) ;
+				}
+			}
+		}
+		&-0#{$respKey}{
+			width:0% ;
+		}
+		@each $key, $value in $size{
+			&-#{$key}#{$respKey}{max-width:$value ;}
+		}
+	}
+
+
+ 
+	.height {
+
+		&-120 {
+			height: 120%;
+		}
+
+		&-100 {
+			height: 100%;
+		}
+
+		&-80 {
+			height: 80%;
+		}
+
+		&-75 {
+			height: 75%;
+		}
+
+		&-66 {
+			height: 66.666667%;
+		}
+
+		&-60 {
+			height: 60%;
+		}
+
+		&-50 {
+			height: 50%;
+		}
+
+		&-40 {
+			height: 40%;
+		}
+
+		&-33 {
+			height: 33.333333%;
+		}
+
+		&-25 {
+			height: 25%;
+		}
+
+		&-20 {
+			height: 20%;
+		}
+
+		
+		&-20vh#{$respKey} {
+			min-height: 20%;
+			min-height: 20vh;
+		}
+		&-25vh#{$respKey} {
+			min-height: 25%;
+			min-height: 25vh;
+		}
+		&-40vh#{$respKey} {
+			min-height: 40%;
+			min-height: 40vh;
+		}
+		&-50vh#{$respKey} {
+			min-height: 50%;
+			min-height: 50vh;
+		}
+		
+		&-65vh#{$respKey} {
+			min-height: 65%;
+			min-height: 65vh;
+		}
+		
+		&-75vh#{$respKey} {
+			min-height: 75%;
+			min-height: 75vh;
+		}
+		
+		&-80vh#{$respKey} {
+			min-height: 80%;
+			min-height: 80vh;
+		}
+		&-100vh#{$respKey} {
+			min-height: 100%;
+			min-height: 100vh!important;
+		}
+
+
+	}
+
+	
+	.max{
+		&-width{
+			&-100#{$respKey}{max-width:100% ;}
+			&-80#{$respKey}{
+				max-width:80% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 80% - #{$taille} ) ;
+					}
+				}
+			}
+			&-75#{$respKey}{
+				max-width:75% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 75% - #{$taille} ) ;
+					}
+				}
+			}
+			&-66#{$respKey}{
+				max-width:66.666667% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 66.666667% - #{$taille} ) ;
+					}
+				}
+			}
+			&-60#{$respKey}{
+				max-width:60% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 60% - #{$taille} ) ;
+					}
+				}
+			}
+			&-50#{$respKey}{
+				max-width:50% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 50% - #{$taille} ) ;
+					}
+				}
+			}
+			&-40#{$respKey}{
+				max-width:40% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 40% - #{$taille} ) ;
+					}
+				}
+			}
+			&-33#{$respKey}{
+				max-width:33.333333% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 33.333333% - #{$taille} ) ;
+					}
+				}
+			}
+			&-25#{$respKey}{
+				max-width:25% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 25% - #{$taille} ) ;
+					}
+				}
+			}
+			&-20#{$respKey}{
+				max-width:20% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 20% - #{$taille} ) ;
+					}
+				}
+			}
+			&-10#{$respKey}{
+				max-width:10% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						max-width : calc( 10% - #{$taille} ) ;
+					}
+				}
+			}
+			&-0#{$respKey}{
+				max-width:0% ;
+			}
+			@each $key, $value in $size{
+				&-#{$key}#{$respKey}{max-width:$value ;}
+			}
+		}
+
+
+		
+		&-height{
+			&-100 {max-height:100% ;}
+			&-80 {max-height:80% ;}
+			&-75 {max-height:75% ;}
+			&-66 {max-height:66.666667% ;}
+			&-60 {max-height:60% ;}
+			&-50 {max-height:50% ;}
+			&-40 {max-height:40% ;}
+			&-33 {max-height:33.333333% ;}
+			&-25 {max-height:25% ;}
+			&-20 {max-height:20% ;}
+			&-0 {max-height:0% ;}
+		}
+	}
+	
+	.min{
+		&-width{
+			&-100#{$respKey}{min-width:100% ;}
+			&-80#{$respKey}{
+				min-width:80% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 80% - #{$taille} ) ;
+					}
+				}
+			}
+			&-75#{$respKey}{
+				min-width:75% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 75% - #{$taille} ) ;
+					}
+				}
+			}
+			&-66#{$respKey}{
+				min-width:66.666667% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 66.666667% - #{$taille} ) ;
+					}
+				}
+			}
+			&-60#{$respKey}{
+				min-width:60% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 60% - #{$taille} ) ;
+					}
+				}
+			}
+			&-50#{$respKey}{
+				min-width:50% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 50% - #{$taille} ) ;
+					}
+				}
+			}
+			&-40#{$respKey}{
+				min-width:40% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 40% - #{$taille} ) ;
+					}
+				}
+			}
+			&-33#{$respKey}{
+				min-width:33.333333% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 33.333333% - #{$taille} ) ;
+					}
+				}
+			}
+			&-25#{$respKey}{
+				min-width:25% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 25% - #{$taille} ) ;
+					}
+				}
+			}
+			&-20#{$respKey}{
+				min-width:20% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 20% - #{$taille} ) ;
+					}
+				}
+			}
+			&-10#{$respKey}{
+				min-width:10% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : calc( 10% - #{$taille} ) ;
+					}
+				}
+			}
+			&-0#{$respKey}{
+				min-width:0% ;
+				@each $nom, $taille in $marges{
+					*[class*="#{$nom}-margin"] > &{
+						min-width : 0% ;
+					}
+				}
+			}
+			@each $key, $value in $size{
+				&-#{$key}#{$respKey}{
+					min-width:$value ;
+					@each $nom, $taille in $marges{
+						*[class*="#{$nom}-margin"] > &{
+							min-width : calc( #{$value} - #{$taille} ) ;
+						}
+					}
+				}
+			}
+		}
+		&-height{   
+			&-100{
+				min-height: 100vh;
+			}
+			&-100-header{  
+				min-height:calc(100vh - #{$headerHeight});
+				@include respond-from(resp(l)){
+				  body.header-transparent &{ 
+					  min-height: 100vh; 
+					  padding-top: calc($headerHeight);
+				  }
+				} 
+			}
+		}
+	}
+
+
+	.display {
+		&-block#{$respKey} {
+			display: block ;
+		}
+		&-inline-block#{$respKey} {
+			display: inline-block ;
+		}
+		&-inline#{$respKey} {
+			display: inline ;
+		}
+		&-flex#{$respKey} {
+			@include display-flex(true);
+		}
+		&-inline-flex#{$respKey} {
+			display: inline-flex;  
+		}
+		&-none#{$respKey} {
+			display: none ;
+		}
+	}
+
+	.ovw#{$respKey}, .overflow-hidden{
+		overflow: hidden;
+	}
+	.overflow-x-clip {
+		overflow-x: clip;
+	}
+
+	 .border{  
+		&-all#{$respKey}{
+			border: 1px solid;
+		}
+	 	&-top#{$respKey}{
+	 		border-top: 1px solid;
+	 	}
+	 	&-bottom#{$respKey}{
+	 		border-bottom: 1px solid;
+	 	}
+	 	&-right#{$respKey}{
+	 		border-right: 1px solid;
+	 	}
+	 	&-left#{$respKey}{
+	 		border-left: 1px solid; 
+	 	}
+	 }
+ 
+
+
+	.fit#{$respKey}{
+		width: 100% ;
+		height: 100% ;
+		//width: 100vw ;
+		height: 100vh ;
+	}
+	.fit {
+		&-x#{$respKey} {
+			width: 100% ;
+			width: 100vw ;
+		}
+		&-y#{$respKey} {
+			height: $vh-100-fallback ;
+			height: 100vh ;
+		}
+		&-y{
+			&-perfect#{$respKey}{
+				height: $vh-100-fallback ;
+				height:calc( 100vh - #{$fit-perfect-gap} ) ;
+			}
+			&-perfect{
+				&-header#{$respKey}{
+					height: $vh-100-fallback ;
+						height:calc( 100vh - ( #{$fit-perfect-gap + $header-height} ) ) ;
+				}
+			}
+			&-min#{$respKey}{
+				min-height:$vh-100-fallback ;
+				min-height:100vh ;
+			}
+			&-min{
+				&-perfect#{$respKey}{
+					min-height: $vh-100-fallback ;
+					min-height:calc( 100vh - #{$fit-perfect-gap} ) ;
+				}
+				&-perfect{
+					&-header-mobile#{$respKey}{
+						min-height: $vh-100-fallback ;
+						min-height:calc( 100vh - ( #{$header-height-mobile} ) ) ;
+					}
+
+					&-header#{$respKey}{
+						min-height: $vh-100-fallback ;
+						min-height:calc( 100vh - ( #{$header-height} ) ) ;
+					}
+
+					&-header-scroll#{$respKey}{
+						min-height: $vh-100-fallback ;
+						min-height:calc( 100vh - ( #{$header-height-scroll} ) ) ;
+					}
+				}
+
+			}
+		}
+	}
+
+
+	.break {
+		&-float#{$respKey} {
+			@include break-float;
+		}
+		&-flex#{$respKey} {
+			@include break-flex;
+		}
+
+	}
+
+	
+
+	.flex {
+		&-justify {
+			&-start#{$respKey} {
+				justify-content: flex-start;
+			}
+			&-center#{$respKey} {
+				justify-content: center;
+			}
+			&-end#{$respKey} {
+				justify-content: flex-end;
+			}
+			&-stretch#{$respKey} {
+				justify-content: stretch;
+			}
+			&-space-between#{$respKey} {
+				justify-content: space-between;
+			}
+			&-space-around#{$respKey} {
+				justify-content: space-around;
+			}
+			&-default#{$respKey} {
+				justify-content: flex-start;
+			}
+		}
+		&-direction {
+			&-row#{$respKey} {
+				flex-direction: row;
+			}
+			&-column#{$respKey} {
+				flex-direction: column;
+			}
+			&-row-reverse#{$respKey} {
+				flex-direction: row-reverse;
+			}
+			&-column-reverse#{$respKey} {
+				flex-direction: column-reverse;
+			}
+		}
+		&-elem#{$respKey}{
+			flex: 1;
+		}
+		&-auto#{$respKey} {
+			flex: 1 1 auto;
+		}
+		&-100#{$respKey} {
+			flex: 1 1 100%;
+		}
+		&-50#{$respKey} {
+			flex: 1 1 49%;
+		}
+		&-0-auto#{$respKey} {
+			flex: 0 0 auto;
+		}
+		&-none#{$respKey} {
+			flex: none;
+		}
+		&-order {
+			&-1#{$respKey} {
+				order: 1;
+			}
+			&-2#{$respKey} {
+				order: 2;
+			}
+			&-3#{$respKey} {
+				order: 3;
+			}
+			&-4#{$respKey} {
+				order: 4;
+			}
+			&-5#{$respKey} {
+				order: 5;
+			}
+		}
+		&-grow {
+			&-1#{$respKey} {
+				flex-grow: 1;
+			}
+			&-2#{$respKey} {
+				flex-grow: 2;
+			}
+			&-3#{$respKey} {
+				flex-grow: 3;
+			}
+			&-4#{$respKey} {
+				flex-grow: 4;
+			}
+			&-5#{$respKey} {
+				flex-grow: 5;
+			}
+			&-6#{$respKey} {
+				flex-grow: 6;
+			}
+			&-7#{$respKey} {
+				flex-grow: 7;
+			}
+			&-8#{$respKey} {
+				flex-grow: 8;
+			}
+			&-9#{$respKey} {
+				flex-grow: 9;
+			}
+			&-10#{$respKey} {
+				flex-grow: 10;
+			}
+		}
+		&-wrap#{$respKey} {
+			flex-wrap: wrap;
+		}
+		&-nowrap#{$respKey} {
+			flex-wrap: nowrap;
+		}
+
+
+
+		&-align {
+			&-items {
+				&-center#{$respKey} {
+					align-items: center;
+				}
+				&-start#{$respKey} {
+					align-items: flex-start;
+				}
+				&-end#{$respKey} {
+					align-items: flex-end;
+				}
+				&-stretch#{$respKey} {
+					align-items: stretch;
+				}
+				&-baseline#{$respKey} {
+					align-items: baseline;
+				}
+			}
+			&-self {
+				&-center#{$respKey} {
+					align-self: center;
+				}
+				&-start#{$respKey} {
+					align-self: flex-start;
+				}
+				&-end#{$respKey} {
+					align-self: flex-end;
+				}
+				&-stretch#{$respKey} {
+					align-self: stretch;
+				}
+				&-baseline#{$respKey} {
+					align-self: baseline;
+				}
+			}
+		}
+
+
+	}
+
+
+
+	
+}
+.z-index, .zi {
+	&-1 {
+		z-index: 1 ;
+	}
+	&-2 {
+		z-index: 2 ;
+	}
+	&-3 {
+		z-index: 3 ;
+	}
+	&-4 {
+		z-index: 4 ;
+	}
+	&-10 {
+		z-index: 10 ;
+	}
+	&-100 {
+		z-index: 100 ;
+	}
+	&-1000 {
+		z-index: 1000 ;
+	}
+}
+
+
+
+.bg {
+	&-blanc {
+		background-color: col(blanc);
+	}
+	&-blanc-o {
+		background-color: rgba(col(blanc),.9);
+	}
+	&-noir {
+		background-color: col(noir);
+	}
+	&-noir-o {
+		background-color: rgba(col(noir),.9);
+	}
+	&-compl {
+		background-color: col(compl);
+	}
+	&-compl-o {
+		background-color: rgba(col(compl),.9);
+	}
+	&-compl2 {
+		background-color: col(compl2);
+	}
+	&-compl2-o {
+		background-color: rgba(col(compl2),.9);
+	}
+	&-ton {
+		background-color: col(ton);
+	}
+	&-ton-o {
+		background-color: rgba(col(ton),.9);
+	}
+	&-ton2 {
+		background-color: col(ton2);
+	}
+	&-ton3 {
+		background-color: col(ton3);
+	}
+	&-alert {
+		background-color: col(alert);
+	}
+	
+	&-transparent {
+		background-color: transparent;
+	}
+	&-fond {
+		@if col(cnt)==transparent {
+			background-color: col(fond);
+		}
+		@else {
+			background-color: col(cnt);
+		}
+	}
+	&-cover {
+		background-size: cover ;
+	}
+	&-contain {
+		background-size: contain !important;
+
+		img{
+			object-fit: contain;
+		}
+	}
+
+	&-top{
+		background-position: top center;
+		> img {background-position: top center;}
+		&.no-js { object-position: top center; 
+			> img {object-position: top center;}
+		}
+	}
+
+	
+	@include respond-from(1000px){
+		
+		&-fixed {
+			background-attachment: fixed ;
+			>.slide {
+				background-attachment: fixed 
+			}
+		}
+	}
+
+
+
+}
+
+
+.text {
+	&-uppercase {
+		text-transform: uppercase 
+	}
+	&-lowercase {
+		text-transform: lowercase
+	}
+	&-decoration {
+		&-underline {
+			text-decoration: underline;
+		}
+		&-line-through {
+			text-decoration: line-through;
+		}
+		&-none {
+			text-decoration: none;
+		}
+	}
+	&-stroke {
+		-webkit-text-stroke: 1px rgba(col(noir),.5);
+		text-stroke: 1px rgba(col(noir),.5);
+		color: transparent !important;
+		
+		.text-color-blanc &, &.text-color-blanc {
+			-webkit-text-stroke: 1px rgba(col(blanc),.9);
+			text-stroke: 1px rgba(col(blanc),.9);
+		}
+	}
+
+
+	&-color,& {
+		&-blanc  {
+			color: col(blanc) ;
+		}
+		&-blanc {
+			&-all {
+				color: col(blanc) !important;
+				a,a:visited,h2,h3,h4,h5,*{color:col(blanc) !important; }
+			}
+			
+		}
+		&-noir  {
+			color: col(noir) ;
+		}
+		&-noir {
+			&-all {
+				color: col(noir) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(noir) }
+			}
+		}
+		&-txt  {
+			$c:col(txt);
+			@if col(txt) == "auto" {$c:getCouleurSelonFond();}
+			color: $c ;
+		}
+		&-txt{
+			$c:col(txt);
+			@if col(txt) == "auto" {$c:getCouleurSelonFond();}
+			&-all {
+				color: $c ;
+				a,a:visited,h2,h3,h4,h5{color:$c }
+			}
+			
+		}
+		&-ton  {
+			color: col(ton) ;
+		}
+		&-ton{
+			&-all {
+				color: col(ton) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(ton) }
+			}
+			
+		}
+		&-ton2  {
+			color: col(ton2) ;
+		}
+		&-ton2{
+			&-all {
+				color: col(ton2) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(ton2) }
+			}
+		}
+		&-ton3  {
+			color: col(ton3) ;
+		}
+		&-ton3{
+			&-all {
+				color: col(ton3) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(ton3) }
+			}
+		}
+		&-compl  {
+			color: col(compl) ;
+		}
+		&-compl{
+			&-all {
+				color: col(compl) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(compl) }
+			}
+		}
+		&-compl2  {
+			color: col(compl2) ;
+		}
+		&-compl2{
+			&-all {
+				color: col(compl2) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(compl2) }
+			}
+		}
+		&-invert  {
+			color: col(invert) ;
+		}
+		&-invert{
+			&-all {
+				color: col(invert) ;
+				a,a:visited,h2,h3,h4,h5{color:col(invert) }
+			}
+		}
+		&-alert  {
+			color: col(alert) ;
+		}
+		&-alert{
+			&-all {
+				color: col(alert) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(alert) }
+			}
+		}
+		&-valid  {
+			color: col(valid) ;
+		}
+		&-valid{
+			&-all {
+				color: col(valid) ;
+				a,a:visited,h2,h3,h4,h5,*{color:col(valid) }
+			}
+		}
+	}
+
+}
+
+
+.float {
+	&-none {
+		@include display($float: none );
+	}
+	&-left {
+		@include display($float: left );
+	}
+	&-right {
+		@include display($float: right );
+	}
+}
+
+
+
+.object-fit{
+	&-contain {
+		object-fit: contain !important;
+	}
+	&-cover {
+		object-fit: cover !important;
+	}
+}
+
+
+
+
+.position {
+	&-relative  {
+		position: relative ;
+	}
+	&-initial  {
+		position: initial !important;
+	}
+		// &-fixed  {
+		// 	position: fixed ;
+		// }
+		// &-absolute  {
+		// 	position: absolute ;
+		// }
+	}
+
+	.top{
+		&-0 {top:0 ;}
+		&-auto {top:auto ;}
+		&-100 {top:100% ;}
+		&-gap {top:$gap ;}
+		&-gapxs {top:$gap-xs ;}
+		&-gaps {top:$gap-s ;}
+		&-gapl {top:$gap-l ;}
+		&-gapxl {top:$gap-xl ;}
+		&-gutter {top:$gutter ;} 
+	}
+
+	.left{
+		&-0 {left:0 ;}
+		&-auto {left:auto ;} 
+		&-100 {left:100% ;}
+		&-gap {left:$gap ;}
+		&-gapxs {left:$gap-xs ;}
+		&-gaps {left:$gap-s ;}
+		&-gapl {left:$gap-l ;}
+		&-gapxl {left:$gap-xl ;}
+		&-gutter {left:$gutter ;}
+	}
+
+	.bottom{
+		&-0 {bottom:0 ;}
+		&-auto {bottom:auto ;}
+		&-100 {bottom:100% ;}
+		&-gap {bottom:$gap ;}
+		&-gapxs {bottom:$gap-xs ;}
+		&-gaps {bottom:$gap-s ;}
+		&-gapl {bottom:$gap-l ;}
+		&-gapxl {bottom:$gap-xl ;}
+		&-gutter {bottom:$gutter ;}
+	}
+
+	.right{
+		&-0 {right:0 ;}
+		&-auto {right:auto ;}
+		&-100 {right:100% ;}
+		&-gap {right:$gap ;}
+		&-gapxs {right:$gap-xs ;}
+		&-gaps {right:$gap-s ;}
+		&-gapl {right:$gap-l ;}
+		&-gapxl {right:$gap-xl ;}
+		&-gutter {right:$gutter ;}
+	}
+
+
+
+
+	.base {
+		&-center {
+			&-x {
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+			&-y {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			&-both {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		}
+
+	}
+
+	.opa8 {
+		opacity: .8;
+	}
+	.opa5 {
+		opacity: .5;
+	}
+	.opa2 {
+		opacity: .2;
+	}
+	.no-wrap {
+		white-space: nowrap !important;
+	}
+	.ombre {
+		@include respond-from(640px) {
+			box-shadow: rgba(#000000, .3) 0px 20px 30px -10px, inset -1px 1px 1px rgba(col(compl),.03);
+			@include trans;  
+			&:hover {
+				//transform: translateY(10px)!important;
+				box-shadow: rgba(#000000, .4) 0px 1px 3px -10px;
+				@include trans; 
+			}
+	
+		} 
+	}
+	
+	.ombre2 {
+		@include respond-from(640px) {
+			box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+			@include trans;
+		}
+	}
+	 
+*[class*="bloc"] {
+	&.bloc--centre { 
+		max-width: 1400px;
+		width: calc(100% - 54px);
+		margin: 0 auto;
+		@include respond-to(640px){ 
+			width: calc(100% - 30px);
+				 
+		}
+		
+	}
+
+	&.bloc--centre2 {
+		max-width: 1150px;
+		margin: 0 auto;
+	}
+
+	&.bloc--centre3 {
+		max-width: 850px;
+		margin: 0 auto;
+	}
+
+	&.bloc--centre4 {
+		max-width: 750px;
+		margin: 0 auto;
+	}
+
+	&.bloc--centre5 {
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	&.bloc--centre6 {
+		max-width: 450px;
+		margin: 0 auto;
+	}
+
+	&.bloc--centre7 {
+		max-width: 350px;
+		margin: 0 auto;
+	} 
+}
+.radius {
+	border-radius: 50% !important;
+}
+.grey {
+	filter: grayscale(100%); @include trans; 
+	&:hover, .ann:hover & , .encart:hover &{
+		filter: grayscale(0%);
+	}
+}
+.invert {
+	filter: invert(100%); 
+}	
+
+.cnt_loaded {
+	opacity: 0; 
+	@include trans($duration:.6s);
+	.loaded & {
+		opacity: 1;
+	}
+}
+
+.white-space-initial {
+	white-space: initial !important;
+}
+
+
+/* GENERATION DES HELPERS SELON LES LARGEURS DE LA CONF
+Tout le css est genere ici, selon les tailles configurees ($resp)
+*/
+@include helpers('');
+// Taille xxs
+@each $key,$value in $resp {@if map-get($value, helper) == 'xxs'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+// Taille xs
+@each $key,$value in $resp {@if map-get($value, helper) == 'xs'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+// Taille s
+@each $key,$value in $resp {@if map-get($value, helper) == 's'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+// Taille m
+@each $key,$value in $resp {@if map-get($value, helper) == 'm'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+// Taille l
+@each $key,$value in $resp {@if map-get($value, helper) == 'l'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+// Taille xl
+@each $key,$value in $resp {@if map-get($value, helper) == 'xl'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+// Taille xxl
+@each $key,$value in $resp {@if map-get($value, helper) == 'xxl'{@include respond-from(map-get($value, taille)){@include helpers(-$key);}}}
+
+// @each $key,$value in $resp {
+// 	@if map-get($value, helper) == 'l'{
+// 		@include respond-from(map-get($value, taille)){
+// 			@include helpers(-$key);
+
+// 		}
+// 	}
+// }
+
+
+
+/*RETROCOMPATBILITE*/
+// html.jgo-no-flexboxlegacy{
+// 	*[class*="flex-direction-column"][class*="display-flex"]{
+// 		display:block ;
+// 		>*:only-child{height:100%;}
+// 	}
+// }
+

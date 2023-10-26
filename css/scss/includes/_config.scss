@@ -1,0 +1,227 @@
+/* FICHIER DE CONFIGURATION DU PROJET */
+
+// parametres du projet
+$interface : '../img/interface/'; 	/*pour touch : ../img/interface/ */
+$scrollnav : false;						// active la nav qui suit le scroll
+$touch-enable : true;					// active le scss de touch
+$print : false;
+$headerHeight : 113px;					// Permet une gestion optimal du sticky / hauteur du diaporama
+
+
+
+
+// variables scss
+// [ COULEURS ]
+$colors1 : (
+	ton			: #2c51b6,				// tonique
+	ton2		: #0d7e92,				// tonique2
+	ton3		: #FBC259,				// tonique3
+	compl		: #f6f6f6,				// complementaire
+	compl2	: #717171,				// complementaire2
+	txt			: black,
+	fond		: #fff,					// fond
+	cnt			: transparent,			// contenu( plan--premier > .centrage)
+	header		: #fff,					// header
+	nav			: transparent,			// nav
+	input		: black,				// color inputs :not(:focus)
+	input-focus	: black,				// color inputs :focus
+	blanc		: white,
+	noir		: black,
+	border		: black,
+	);
+
+ 
+$colors2 : (
+	invert		: black,
+	
+	valid		: desaturate(lighten(green,25%), 50%),
+	alert		: lighten(red,10%),
+	grade		: #fdd835,
+	fb			: #3c599b,
+	tw			: #3acaff,
+	gplus		: #d34836,
+	pt			: #cb2027,
+	viadeo		: #f07355,
+	linkedin	: #0077b5,
+	instagram	: #355c86,
+	youtube		: #e12b28,
+	tripadvisor : #00a680
+	);
+
+$colors : map-merge($colors1, $colors2);
+
+@function col($name:ton, $map:$colors){
+	@return map-get($map,$name);
+};
+
+/*parametres de la nav */
+$col-fond : col(blanc);
+$col-liens-color : col(noir); $col-liens-hover-color : col(ton);
+$col-liens-fond : transparent; $col-liens-hover-fond : transparent;
+$col-sous-menu : $col-fond;
+$col-sous-menu-liens-color : col(noir); $col-sous-menu-liens-hover-color : col(ton);
+$col-sous-menu-liens-fond : transparent; $col-sous-menu-liens-hover-fond : col(blanc);
+
+// style btMenu NAV mobile
+$col-bt-menu-fond	: col(ton); 
+$col-bt-menu-lignes	: col(blanc);
+$col-bt-menu-text	: col(invert);
+
+
+// style bt et CTA
+$bt-fond:col(ton); // couleur de fond par défaut
+$col-minimalist : col(txt);
+$col-minimalist-reverse : col(fond);
+
+
+
+
+//-------------------------------------------------------------------------------
+
+
+//[ TYPOS ]
+
+$typo		: 'Poppins', sans-serif;
+$typo-titre	: 'Poppins', sans-serif;
+// $typo-alt	: 'Roboto', sans-serif;
+
+//[ TYPOS download]
+// $font : '../fonts/'; /* Chemin des polices : templates/captain/fonts */
+// @font-face {
+// 	font-family: "typoIci";
+// 	src: url("#{$font}typoIci.woff2") format("woff2"),
+// 			url("#{$font}typoIci.woff") format("woff");
+// }
+
+//-------------------------------------------------------------------------------
+
+
+// [ FONT SIZE ] //
+
+$titleFontSize		: 4em;
+$verybigFontSize	: 3em;
+$bigFontSize		: 2em;
+$mediumFontSize		: 1.25em;
+$smallFontSize		: 12px;
+$txtFontSize		: 15px;
+$normalFontSize		: 1em;
+$xsmallFontSize		: 0.9em;
+$gap-ie-fallback	: 2%;				// valeur qui sera soustraite aux calculs de largeur pour ie et autres consorts bas de gamme
+$includedWidth		: 25%;				// largeur d'included (bloc flottant)
+
+
+//-------------------------------------------------------------------------------
+
+
+//[ MARGES CSS ]
+$gap				: 20px;		// taille des ecarts : unite de base utilisee pour tous les calculs de marge, padding et width
+$gap-xxxl			: $gap*8;
+$gap-xxl			: $gap*6;
+$gap-xl				: $gap*4;
+$gap-l				: $gap*2;
+$gap-s				: $gap/2;
+$gap-xs				: $gap/4;
+$gutter				: $gap/1.5; 	// espace a conserver sur les cotes dans le cadre d'un centrage
+//config des boutons pour garder la consistance dans toute la config
+
+
+$bt-padding-y : $gap/1.5;
+$bt-padding-x :$gap;
+$bt-font-size:$mediumFontSize;
+$bt-line-height:1.2;
+$bt-border-radius:0px; // ici renseigner le border-radius voulu
+
+
+//en cree un tableau pour le faire tourner dans les helpers
+$marges : (
+	'onepixel' 	: 1px,
+	'verysmall' : $gap-xs,
+	'small' 	: $gap-s,
+	'normal' 	: $gap,
+	'big' 		: $gap-l,
+	'verybig' 	: $gap-xl,
+	'section' 	: $gap-xxl,
+	'extrem' 	: $gap-xxxl,
+	'gutter' 	: $gutter,
+	);
+
+// [ TAILLES ]
+//hauteur du header
+$header-height	     : auto;
+$header-height-scroll: auto;
+$header-height-mobile: auto;
+// espace qui sera retire a un 100vh pour avoir un bloc de la taille de l'écran - la marge qu'on veut
+$fit-perfect-gap	: 48px;
+
+// TAILLE A LAQUELLE LA NAV VA PASSER EN MODE DESKTOP
+$break-nav : 1025px;
+
+// FALLBACK EN PX LORSQUE MODERNIZR NE DETECTE PAS UN ENVIRONNEMENT CSSVHUNIT
+$vh-100-fallback : 500px;
+
+
+//-------------------------------------------------------------------------------
+
+
+/* 
+/!\ TAILLES DES BLOCS - utilisé pour créer des helpers et définir la taille du centrage
+!! RIEN A VOIR AVEC LE RESPONSIVE !!
+attention à ne pas trop rajouter de tailles, les helpers étant générés en fonctions
+---
+*/
+
+$size				: (
+	large	: 1025px,
+	small	: 640px
+	);
+
+
+//-------------------------------------------------------------------------------
+
+
+// [ TAILLE DU CENTRAGE ]
+$centrageMaxWidth	: 1200px;
+
+
+//-------------------------------------------------------------------------------
+
+
+//Animation
+$easeOutBack		: cubic-bezier(0.175, 0.885, 0.320, 1.275);
+$easeOut			: cubic-bezier(0.000, 0.000, 0.025, 1.020);
+$easeIn				: cubic-bezier(0.000, 0.005, 1.000, 1.000);
+$fast               : cubic-bezier(.23,0,1,.44);
+$smooth             : cubic-bezier(.165,.84,.44,1);
+$rebond				: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+
+//-------------------------------------------------------------------------------
+
+
+/* 
+/!\ TAILLES DE RESPONSIVE - TOUS LES NOMS DES HELPERS SE CREENT A PARTIE DE CE TABLEAU - ATTENTION
+xxs 		: ('taille' : 320px, 'helper':false)
+---
+nom qui sera appliqué aux helpers et qui sera utilisé pour appeler cette taille dans le responsive
+			   ----------------
+			   taille en pixels pour le responsive
+								 --------------
+								 indique si le scss crée des helpers avec cette taille, 
+								 ou si c'est juste pour être utilisé dans le responsive
+								 
+								 -- Activation pour les helpers : Mettre le nom de la taille dans le paramètre helper 
+*/
+$resp : (
+	xxs 		: ('taille' : 400px, 'helper':''),
+	xs 		: ('taille' : 480px, 'helper':''),
+	s 		: ('taille' : 640px, 'helper':'s'),
+	m 		: ('taille' : 800px, 'helper':'m'),
+	l 		: ('taille' : 1025px, 'helper':'l'),
+	xl 		: ('taille' : 1280px, 'helper':''),
+	xxl 		: ('taille' : 1600px, 'helper':'')
+	);
+
+
+@function resp($name:m, $map:$resp){
+	@return map-get(map-get($map,$name), taille);
+};

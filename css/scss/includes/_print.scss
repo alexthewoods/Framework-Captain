@@ -1,0 +1,12 @@
+@if $print == true{
+// Design de la fiche imprimée
+
+.separateur {
+	@include display;
+	clear:both;
+	border-bottom: 1px solid col(ton);
+}
+
+}
+
+

@@ -1,0 +1,137 @@
+@charset "UTF-8";
+/*! JTTPLv5.0 CAPTAIN | STYLE.SCSS:CSS  | (c)jalis 2016 all rights reserved */
+@import "includes/_mixins";
+$col-ton: #ffffff;
+$col-ton: #ffffff;
+$col-fond :#13b5ea;
+$col-txt:#ffffff;
+$gap:18px;
+$typo : 'Roboto', sans-serif;
+
+
+
+
+////////////////////////////////////////
+
+@import "includes/_normalize"; 
+/*!jalisboilerplate*/
+/***** VALEURS PAR DEFAUT *****/
+br {letter-spacing:0px;}
+html, body, div, span, h1, h2, h3, h4, h5, h6, ol, ul, li, dl, dt, dd, caption, table, tr, th, td, thead, tbody, tfoot, p, blockquote, cite, q, abbr, acronym, address, a, em, strong, img, ins, del, dfn, kbd, pre, xmp, code, form, fieldset, legend, label, object {    margin: 0;  padding: 0; border: 0;  outline:none;}
+h1, h2, h3, h4, h5, h6, ol, ul, li {text-align: left; font-weight:normal;}
+p {margin:0;} li {list-style-type: none;}
+
+
+body{
+	background:$col-fond url(../img/interface/jalis/back.jpg) no-repeat center center;
+	background-blend-mode: multiply;
+	background-size:cover;
+	
+	font-family: $typo;
+	color:$col-txt;
+	min-height:100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	
+	a, a:visited{
+		color:$col-txt;
+		text-decoration: none;
+	}
+}
+
+
+
+.construction{
+	@include display;
+	max-width:600px;
+	margin: 48px;
+	padding: 0px;
+	
+	h2{
+		font-size:60px;
+		font-weight:700;
+		margin: 0 0 $gap*2 0;
+		line-height:1.01;
+		
+	}
+	
+	h3{
+		font-weight:300;
+		font-size:24px;
+		margin: 0 0 $gap*2 0;
+		
+		>span{
+			font-weight:bold;
+		}
+	}
+	
+	
+	.bts{
+		display: flex;
+		.bouton{
+			@include display;
+			margin: 0 0 0 auto;
+			
+			padding: $gap/2 $gap;
+			border:1px solid white;
+			color:white;
+			
+			font-weight: bold;
+			
+			&:hover{
+				background:white;
+				color:$col-fond;
+			}
+		}
+	}
+	
+	
+	
+	@include respond-to(640px){
+		.construction-pastille, h2,h3{
+			text-align: center;
+		}
+		
+		h2{
+			font-size:40px;
+		}
+		
+		h3{
+			font-size:18px;
+		}
+		
+		.bts{
+			justify-content: center;
+			.bouton{
+				margin:auto;
+				text-align: center;
+			}
+		}
+	}
+	
+	
+	
+	
+	@include respond-to(479px){
+		
+		h2{
+			font-size:20px;
+		}
+		
+		h3{
+			font-size:12px;
+		}
+		
+		.bts{
+			.bouton{
+				font-size:12px;
+			}
+		}
+	}
+}
+
+
+
+/////////////////////////////////////////
+// @import url(https://fonts.googleapis.com/css?family=Roboto:700,300,100);
